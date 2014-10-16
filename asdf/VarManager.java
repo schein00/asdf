@@ -149,6 +149,7 @@ class VarManager{
 		return true;
 	}
 
+	//pela simplicidade o armazenamento de string ja esta pronto.
 	private static boolean assigStr( Str var, String v ){
 		
 		if( v.charAt(0) != '"' || v.charAt(v.length()-1) != '"' ){
