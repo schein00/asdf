@@ -1,10 +1,8 @@
 Principal{
-	
-	inteiro a = 100, b = 1000, c;
 
-	c = a = a + b, b = a, a = c;
+	inteiro a, b, c = 10;	
 
-	real r = 10.10;
-	
-	str m = "matheus", n = "kkkk";
+	a = b = c;
+
+	inteiro p = c + b, k = a+c;
 }

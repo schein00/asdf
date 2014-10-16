@@ -28,6 +28,8 @@ class VarManager{
 		name = name.trim();
 		v = v.trim();
 
+		if( nameVerify( name ) ) return false;
+
 		if( exists( vars, name ) != null ) {
 			System.out.println("ERRO: A variável " + name + " já existe.");
 			return false;
@@ -35,7 +37,7 @@ class VarManager{
 
 		Real r = new Real( name, 0 );
 
-		if( assigReal( r, v ) ){
+		if( assigReal( vars, r, v ) ){
 			vars.add(r);
 
 			return true;
@@ -48,19 +50,16 @@ class VarManager{
 		name = name.trim();
 		v = v.trim();
 
+		if( nameVerify( name ) ) return false;
+
 		if( exists( vars, name ) != null ){
 			System.out.println("ERRO: A variável " + name + " já existe.");
 			return false;
 		}
 
-		if( v.contains(".") ) {
-			System.out.println("ERRO: Não pode colocar valor real em um número inteiro.");
-			return false;
-		}
-
 		Int i = new Int( name, 0 );
 
-		if( assigInt( i, v ) ){
+		if( assigInt( vars, i, v ) ){
 			vars.add(i);
 
 			return true;
@@ -79,19 +78,8 @@ class VarManager{
 
 		return null;
 	}
-	
-	public static boolean nonNumeric( String name, String k ){
-		for( int i = 0; i < k.length(); i++ ){
-			if( ( k.charAt(i) > '9' || k.charAt(i) < '0' ) && k.charAt(i) != '.' && k.charAt(i) != '+'
-				&& k.charAt(i) != '*' && k.charAt(i) != '/' && k.charAt(i) != '-' ){			
-				System.out.println("ERRO: Existem caracteres inválidos apontados como valor da variável " + name + ".");
-				return true;
-			}
-		}
-		
-		return false;
-	}
 
+	//restrições ao nome das variáveis devem ser adcionados aqui.
 	public static boolean nameVerify( String v ){
 
 		if( v.compareTo("Principal") == 0 || v.compareTo("real") == 0 ||
@@ -103,8 +91,8 @@ class VarManager{
 			return true;	
 		}
 
-		//restrições ao nome das variáveis devem ser adcionados aqui.
-		if( v.contains(" ") || ( v.charAt(0) >= '0' && v.charAt(0) <= '9' ) || v.charAt(0) == '!' ){
+		if( v.contains(" ") || ( v.charAt(0) >= '0' && v.charAt(0) <= '9' ) || v.charAt(0) == '!' ||
+		 	v.contains("+") || v.contains("-") || v.contains("/") || v.contains("*") ){
 			System.out.println("ERRO: Existem caracteres inválidos no nome da variável " + v + ".");
 			return true;
 		}
@@ -122,34 +110,43 @@ class VarManager{
 			return false;
 		}
 
-		else if( k instanceof Int ) return assigInt( (Int)k, v );
+		else if( k instanceof Int ) return assigInt( var, (Int)k, v );
 
-		else if( k instanceof Real ) return assigReal( (Real)k, v );
+		else if( k instanceof Real ) return assigReal( var, (Real)k, v );
 	
 		else return assigStr( (Str)k, v );
 	}
 
-	private static boolean assigInt( Int var, String v ){
-		if( v.contains(".") ) {
-			System.out.println("ERRO: Não pode colocar valor real em um número inteiro.");
-			return false;
-		}
-		//fazer validações para número inteiro, e chamar método para resolver a expressão na string v		
+	private static boolean assigInt( Vector< Var > vars, Int var, String v ){
 
-		var.setValue(10);
+		Integer k = Exp.intArith( vars, v );		
+
+		if( k != null ){
+			var.setValue( k.intValue() );
 		
-		return true;
+			return true;
+		}
+
+		System.out.println("	Variavel: " + var.getName());
+
+		return false;
 	}
 
-	private static boolean assigReal( Real var, String v ){
-		//fazer validações para número inteiro, e chamar método para resolver a expressão na string v
+	private static boolean assigReal( Vector< Var > vars, Real var, String v ){
 
-		var.setValue(12);
+		Double k = Exp.realArith( vars, v );		
 
-		return true;
+		if( k != null ){
+			var.setValue( k.intValue() );
+		
+			return true;
+		}
+
+		System.out.println("	Variavel: " + var.getName());
+
+		return false;
 	}
 
-	//pela simplicidade o armazenamento de string ja esta pronto.
 	private static boolean assigStr( Str var, String v ){
 		
 		if( v.charAt(0) != '"' || v.charAt(v.length()-1) != '"' ){

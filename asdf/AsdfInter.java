@@ -52,12 +52,12 @@ class AsdfInter {
 
 						//falta isso
 						if( command.compareTo( "Se" ) == 0 ){
-							System.out.println("ERRO: Comando Se encontrado");
+							System.out.println("Comando Se encontrado");
 						}
 
 						//falta isso
 						else if( command.compareTo( "Enquanto" ) == 0 ){
-							System.out.println("ERRO: Comando Enquanto encontrado");
+							System.out.println("Comando Enquanto encontrado");
 
 						}
 
@@ -170,7 +170,7 @@ class AsdfInter {
 			
 			pair = mult[i].split("=");
 
-			if( pair.length < 1 ){
+			if( pair.length < 2 ){
 				System.out.println("ERRO: Comando não reconhecido.");
 				return false;
 			}		
@@ -205,13 +205,13 @@ class AsdfInter {
 			if( k.contains("=") ){
 				pair = k.split("=");
 
-				pair[0] = pair[0].trim();
-				pair[1] = pair[1].trim();
-
 				if( pair.length != 2 ){
 					System.out.println("ERRO: Comando não reconhecido.");
 					return false;
 				}
+
+				pair[0] = pair[0].trim();
+				pair[1] = pair[1].trim();
 
 				if( t == 0 ) {
 					if( !VarManager.newInt( vars, pair[0], pair[1] ) ) return false;
@@ -225,7 +225,7 @@ class AsdfInter {
 				}
 			}
 			else{
-				if( t == 0 ) {
+				if( t == 0 ) {	
 					if( !VarManager.newInt( vars, k, "0" ) ) return false;
 				}
 
