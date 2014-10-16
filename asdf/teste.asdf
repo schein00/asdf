@@ -1,8 +1,7 @@
 Principal{
-
 	inteiro a, b, c = 10;	
 
-	a = b = c;
+	se( a < c ){
 
-	inteiro p = c + b, k = a+c;
+	}
 }

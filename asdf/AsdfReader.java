@@ -53,7 +53,7 @@ class AsdfReader {
             
             // Inicializamos o interpretador com o vetor de linhas. A partir
             // desse ponto, o objeto "b" irá interpretar o código lido do arquivo.
-            b.interpret( linhas, 0, 0 );
+            b.interpret( linhas );
             
         } catch (IOException e) {
 
