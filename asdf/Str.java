@@ -1,6 +1,6 @@
 class Str extends Var{
 
-	String value;
+	private String value;
 	
 	public Str( String name, String v ){
 		super( name );

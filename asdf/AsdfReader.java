@@ -1,3 +1,17 @@
+/**
+ * Exemplo de interpretador.
+ *
+ * Esse é o ponto de partida para o interpretador da linguagem 'Blah'.
+ * O único objetivo desse programa é instanciar um objeto Blah, que é
+ * o interpretador da linguagem, passando para ele o caminho do arquivo
+ * a ser interpretador. Para mais informações, veja o arquivo Blah.java
+ *
+ * Para executar, rode o seguinte comando no terminal:
+ * java Blah ./teste.blah
+ * 
+ * Por Fernando Bevilacqua <fernando.bevilacqua@uffs.edu.br>
+ */
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -11,11 +25,11 @@ class AsdfReader {
 
         AsdfInter b;
 
-        String linhas[] = new String[2000]; // arquivo pode ter, no maximo, 2000 linhas.
+        String linhas[] = new String[2000]; // arquivo pode ter, no máximo, 2000 linhas.
         
         try {
 
-            // Referencia o arquivo. args[0] contera os dados passados pela linha de comando.
+            // Referencia o arquivo. args[0] conterá os dados passados pela linha de comando.
             f = new File(args[0]);
 
             // Mandamos o Scanner ler a partir do arquivo.
@@ -38,7 +52,7 @@ class AsdfReader {
             }
             
             // Inicializamos o interpretador com o vetor de linhas. A partir
-            // desse ponto, o objeto "b" ira interpretar o codigo lido do arquivo.
+            // desse ponto, o objeto "b" irá interpretar o código lido do arquivo.
             b.interpret( linhas, 0, 0 );
             
         } catch (IOException e) {
