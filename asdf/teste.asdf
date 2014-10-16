@@ -1,6 +1,0 @@
-Principal{
-	
-	inteiro a = 100, b = 1000, c;
-	real d = 2.2;
-	str s = "matheus";
-}
