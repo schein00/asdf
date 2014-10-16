@@ -1,0 +1,10 @@
+Principal{
+	
+	inteiro a = 100, b = 1000, c;
+
+	c = a = a + b, b = a, a = c;
+
+	real r = 10.10;
+	
+	str m = "matheus", n = "kkkk";
+}
