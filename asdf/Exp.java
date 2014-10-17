@@ -19,13 +19,15 @@ class Exp{
 	
 		else if( e.contains("+") ) return '+';
 
+		else if( e.contains("%") ) return '%';
+
 		return ' ';
 	}	
 
 	public static boolean nonNumeric( String k ){
 		for( int i = 0; i < k.length(); i++ ){
 			if( ( k.charAt(i) > '9' || k.charAt(i) < '0' ) && k.charAt(i) != '.' && k.charAt(i) != '+'
-				&& k.charAt(i) != '*' && k.charAt(i) != '/' && k.charAt(i) != '-' ){
+				&& k.charAt(i) != '*' && k.charAt(i) != '/' && k.charAt(i) != '-' && k.charAt(i) != '%'){
 				return true;
 			}
 		}
@@ -62,6 +64,8 @@ class Exp{
 		if( o == '-' ) return e.split("-");
 
 		if( o == '/' ) return e.split("/");
+
+		if( o == '%' ) return e.split("%");
 		
 		return e.split("\\*");
 	}
@@ -98,6 +102,8 @@ class Exp{
 		else if( o == '+' ) k = a.intValue() + b.intValue();
 
 		else if( o == '-' ) k = a.intValue() - b.intValue();
+		
+		else if( o == '%' ) k = a.intValue() % b.intValue();
 
 		return new Integer( k );
 	}

@@ -1,19 +1,17 @@
 Principal{
-	inteiro a, b, c = 10, d;	
+	
+	inteiro n = 23, ehPrimo = 1, i = 2, sq, z = 0, r, d;
 
-	se( a <= c ){
-		a = c / 2;
+	enquanto( sq < n ){
+		i = i + 1;
 
-		se( b <= a ){
-			b = a;
-			se( a == b ){
-				c = 0;
-			}
+		sq = i * i;
+
+		r = n % i;
+
+		se( r == z ){
+			ehPrimo = 0;
+			d = i;
 		}
-	}
-
-	inteiro z = 0;
-	se( c == z ){
-		d = 100;
 	}
 }
