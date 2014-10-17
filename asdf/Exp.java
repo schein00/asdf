@@ -212,32 +212,6 @@ class Exp{
 			System.exit(0);
 		}
 
-		else if( e.contains("<") ){
-			pair = e.split("<");
-			pair[0] = pair[0].trim();
-			pair[1] = pair[1].trim();
-			
-			a = VarManager.exists( vars, pair[0] );
-			b = VarManager.exists( vars, pair[1] );
-			
-			if( a != null && b != null ) {
-				if( a instanceof Int && b instanceof Int ){
-					return ((Int)a).getValue() < ((Int)b).getValue();
-				}
-
-				if( a instanceof Real && b instanceof Real ){
-					return ((Real)a).getValue() < ((Real)b).getValue();
-				}
-
-				if( a instanceof Str && b instanceof Str ){
-					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) < 0;
-				}
-			}
-
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
-		}
-
 		else if( e.contains("<=") ){
 			pair = e.split("<=");
 			pair[0] = pair[0].trim();
@@ -257,6 +231,32 @@ class Exp{
 
 				if( a instanceof Str && b instanceof Str ){
 					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) <= 0;
+				}
+			}
+
+			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+			System.exit(0);
+		}
+
+		else if( e.contains("<") ){
+			pair = e.split("<");
+			pair[0] = pair[0].trim();
+			pair[1] = pair[1].trim();
+			
+			a = VarManager.exists( vars, pair[0] );
+			b = VarManager.exists( vars, pair[1] );
+			
+			if( a != null && b != null ) {
+				if( a instanceof Int && b instanceof Int ){
+					return ((Int)a).getValue() < ((Int)b).getValue();
+				}
+
+				if( a instanceof Real && b instanceof Real ){
+					return ((Real)a).getValue() < ((Real)b).getValue();
+				}
+
+				if( a instanceof Str && b instanceof Str ){
+					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) < 0;
 				}
 			}
 

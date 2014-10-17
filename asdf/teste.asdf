@@ -1,7 +1,19 @@
 Principal{
-	inteiro a, b, c = 10;	
+	inteiro a, b, c = 10, d;	
 
-	se( a < c ){
+	se( a <= c ){
+		a = c / 2;
 
+		se( b <= a ){
+			b = a;
+			se( a == b ){
+				c = 0;
+			}
+		}
+	}
+
+	inteiro z = 0;
+	se( c == z ){
+		d = 100;
 	}
 }

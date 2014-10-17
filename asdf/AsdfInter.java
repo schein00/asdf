@@ -4,18 +4,31 @@ class AsdfInter {
 
     private String lines[], line;
 	private Vector< Var > vars;
-	private Stack< Character > keyStack;
+	private Stack< String > step, loop;
 
 	public AsdfInter(){
 		this.vars = new < Var >Vector();
-		this.keyStack = new < Character > Stack();
 	}	
+
+	private String getCond( String s, int i ){
+		String pair[] = s.split("\\(");
+					
+		if( pair.length != 2 ){
+			System.out.println("ERRO: Comando nao reconhecido");
+			System.out.println("Linha: " + ( i + 1 ) );
+			return null;
+		}
+					
+		String pair2[] = pair[1].split("\\)");
+		return pair2[0].trim();
+	}
 
     public boolean interpret( String l[] ) {
 
 		String s;
         this.lines = l;
-		Stack< String > step = new < String >Stack();
+		step = new < String >Stack();
+		loop = new < String >Stack();
 
         for( int i = 0; i < this.lines.length; i++ ) {
             if( this.lines[i] != null ){
@@ -24,9 +37,76 @@ class AsdfInter {
 				if( line.contains("se") || line.contains("enquanto") ){
 					if(( s = readStep(i,0,'{')) == null ) return false;
 
-					boolean flag = Exp.ineq( vars, s );
+					String cond = getCond( s, i );
+		
+					if( cond == null ) return false;
 
-					if( flag ) System.out.println("executar");
+					boolean flag = Exp.ineq( vars, cond.trim() );
+		
+					i++;	
+					step.push( line );
+					while( i < lines.length ){
+						if( lines[i] == null ) {
+							i++;
+							continue;
+						}
+
+						line = lines[i].trim();
+
+						step.push( line );					
+		
+						if( line.contains("se") || line.contains("enquanto") ){
+							if( flag ) {
+								if(( s = readStep(i,0,'{')) == null ) return false;
+
+								cond = getCond( s, i );
+
+								if( cond == null ) return false;
+
+								flag = Exp.ineq( vars, cond.trim() );
+							}
+						}
+
+						else if( line.contains("}") ){
+							int key = 0;	
+
+							while( !step.empty() ){
+								loop.push( step.pop() );
+
+								if( loop.peek().contains("}") ) key++;
+
+								else if( loop.peek().contains("se") || loop.peek().contains("enquanto") || 
+										 loop.peek().contains("Principal") ) {
+									key--;
+									if( key == 0 ) break;
+								}
+							}
+
+							if( step.empty() && key > 0 ){
+								System.out.println("ERRO: Comando nao reconhecido linha: " + ( i + 1 ));
+								return false;
+							}
+
+							if( loop.peek().contains("enquanto") ){
+								//simular loop.
+								//faltando.
+							}
+
+							else if( loop.peek().contains("se") ){
+								//apenas colocar devolta.
+								while( !loop.empty() ) step.push( loop.pop());
+							}
+
+							else if( !loop.peek().contains("Principal") ){
+								System.out.println("ERRO: Comando nao reconhecido linha: " + ( i + 1 ));
+								return false;
+							}
+						}
+
+						else if( flag ) execute( i );
+			
+						i++;
+					}
 				}
 
 				else {
@@ -34,6 +114,11 @@ class AsdfInter {
 				}
 			}	
         }
+
+		if( !step.empty() ){
+			System.out.println("ERRO: Esta faltando algum '{'.");
+			return false;
+		}
 
 		//debug.
 		Int k1; Real k2; Str k3;
@@ -75,10 +160,8 @@ class AsdfInter {
 						
 						return false;
 				}
-
-					keyStack.push( c );
-
-					subInit = j+1;
+				step.push( line );
+				subInit = j+1;
 			}
 
 			else if( j+1 == line.length() && c != ';' && c != '}' ) {
