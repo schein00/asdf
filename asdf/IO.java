@@ -2,8 +2,6 @@ import java.util.*;
 
 class IO{
 
-	
-
 	//line = entrada( var_1, ... , var_n );
 	private static String[] getParam( String str ){
 		return str.split("\\(")[1].split("\\)")[0].split(",");
@@ -11,13 +9,37 @@ class IO{
 	
 	public static void input( String line, Vector< Var > vars ){
 
+		Var v;
 		String[] param = getParam(line);
 
+		Scanner scan = new Scanner( System.in );
+
 		for( int i = 0; i < param.length; i++ ){
-			System.out.println( param[i] );
+			
+			v = VarManager.exists( vars, param[i].trim() );
+
+			if( v instanceof Str ){
+				((Str)v).setValue( scan.next() );
+			}
+
+			else if( v instanceof Real ){
+				double k = scan.nextDouble();
+
+				((Real)v).setValue( k );
+			}			
+
+			else if( v instanceof Int ){
+				((Int)v).setValue( scan.nextInt() );
+			}
+
+			else{
+				System.out.println("ERRO: " + param[i] + " nao reconhecido " );
+	
+				System.exit(0);
+			}
 		}
 
-		System.exit(0);
+		scan.close();
 	}
 
 	public static void output( String line, Vector< Var > vars ){
