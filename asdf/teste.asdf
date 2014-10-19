@@ -1,8 +1,19 @@
-real a, b, m;
+inteiro a, a1, a2, i, cmp = 10, cmp2 = 1;
 
-entrada( a, b );
+a1 = 1, a2 = 0;
 
-m = a + b;
-m = m / 2;
+enquanto( i < cmp ){
+	saida( a );
 
-saida( m );
+	se( a == cmp2 ){
+		saida( a );
+		i = i + 1;
+	}
+
+	a = a1 + a2;
+
+	a2 = a1;
+	a1 = a;
+
+	i = i + 1;
+}

@@ -1,2 +1,5 @@
-Quarto Commit, Criaçao da classe Exp que resolvera expressoes aritmeticas.
-A responsabilidade de passar o valor para uma variável foi passada ao método estatico assig da classe VarManager.
+-- Entrada e saída.
+-- Loops e ifs aninhados.
+-- Criação de variáveis na mesma linha.
+-- Atribuição de valores para variáveis na mesma linha.
+-- Sintaxe flexível.
