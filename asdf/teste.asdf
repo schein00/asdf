@@ -1,17 +1,9 @@
 Principal{
 	
-	inteiro n = 23, ehPrimo = 1, i = 2, sq, z = 0, r, d;
+	inteiro n = 1000, i = 0;
 
-	enquanto( sq < n ){
+	enquanto( i < n ){
+		saida( i );
 		i = i + 1;
-
-		sq = i * i;
-
-		r = n % i;
-
-		se( r == z ){
-			ehPrimo = 0;
-			d = i;
-		}
 	}
 }

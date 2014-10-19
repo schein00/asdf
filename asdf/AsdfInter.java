@@ -2,10 +2,13 @@ import java.util.*;
 
 class AsdfInter {
 
+	private int hmLines;
     private String lines[], line;
 	private Vector< Var > vars;
 
-	public AsdfInter( String l[] ){
+	public AsdfInter( String l[], int hml ){
+
+		hmLines = hml;
 		this.lines = l;
 		vars = new < Var >Vector();
 	}	
@@ -23,96 +26,86 @@ class AsdfInter {
 		return pair2[0].trim();
 	}
 
-    public boolean interpret( int i, int nivel ) {
+    public boolean interpret( int i ) {
 
 		String s;
 		Stack< String > check = new < String >Stack();
 
-        for( ; i < this.lines.length; i++ ) {
-            if( this.lines[i] != null ){
-				line = lines[i].trim();
+        for( ; i < hmLines; i++ ) {
+            
+			line = lines[i].trim();
 
-				boolean isIF = line.contains("se");
-				boolean isWhile = line.contains("enquanto");
+			boolean isIF = line.contains("se");
+			boolean isWhile = line.contains("enquanto");
 	
-				if( isIF || isWhile ){
-					if(( s = readStep(i,0,'{')) == null ) return false;
+			if( isIF || isWhile ){
+				if(( s = readStep(i,0,'{')) == null ) return false;
 
-					String cond = getCond( s, i );
+				String cond = getCond( s, i );
 		
-					if( cond == null ) return false;
+				if( cond == null ) return false;
 
-					cond = cond.trim();
+				cond = cond.trim();
 					
-					check.push( line );
+				check.push( line );
 				
+				i++;
+				if( isIF && Exp.ineq( vars, cond ) ){
+					if( !interpret( i ) ) return false;
+				}
+				else if( isWhile ) {
+					while( Exp.ineq( vars, cond ) ){												
+						if( !interpret( i ) ) return false;
+					}
+				}
+
+				int last = i-1;
+				while( !check.empty() && i < lines.length ){
+
+					if( lines[i].contains("se") || lines[i].contains("enquanto") ){
+						last = i;
+						check.push( lines[i] );
+					}
+
+					else if( lines[i].contains("}")  ){
+						check.pop();
+					}
+
 					i++;
-					if( isIF && Exp.ineq( vars, cond ) ){
-						if( !interpret( i, nivel+1 ) ) return false;
-					}
-					else if( isWhile ) {
-						while( Exp.ineq( vars, cond ) ){												
-							if( !interpret( i, nivel+1 ) ) return false;
-						}
-					}
+				}
+	
+				if( !check.empty() || i >= hmLines ){
+					System.out.println("ERRRO: Esta faltando um '}' para o '{' na linha " + ( last + 1 ) );
+					System.exit(0);
+ 				}
+			}
 
-					while( !check.empty() && i < lines.length ){
-						//if( nivel == 0 )System.out.println( lines[i] );
-
-						if( lines[i].contains("se") || lines[i].contains("enquanto") ){
-							check.push( lines[i] );
-						}
-
-						else if( lines[i].contains("}")  ){
-							check.pop();
-						}
-
-						i++;
-					}
-
-					if( !check.empty() || i+1 >= lines.length ){
-						System.out.println("ERRRO: Esta faltando um '}'");
-					}
+			else if( line.contains("entrada") ) {
+				if( ( s = readStep( i, 0, ';' ) ) == null ) {
+					System.out.println("	Linha: " + (i+1) );
+					System.exit(0);
 				}
 
-				else if( line.contains("}") ){
-					if( !check.empty() || i+1 >= lines.length ){
-						System.out.println("ERRRO: Esta faltando um '}'");
-					}
+				IO.input( line, vars );
+			}
 
-					return true;
+			else if( line.contains("saida") ) {
+				if( ( s = readStep( i, 0, ';' ) ) == null ) {
+					System.out.println("	Linha: " + (i+1) );
+					System.exit(0);
 				}
-				else {
-					//System.out.println(nivel);
-					execute( i );
-				}
-			}	
-        }
+
+				IO.output( line, vars );
+			}
+
+			else if( line.contains("}") ) return true;
+				
+			else execute( i );
+		}	
 
 		if( !check.empty() ){
 			System.out.println("ERRRO: Esta faltando um '}'");
-		}
-
-		//debug.
-		if( nivel == 0 ){
-			Int k1; Real k2; Str k3;
-			for( int z = 0; z < vars.size(); z++ ){		
-
-				if( vars.elementAt(z) instanceof Int ){
-					k1 = ( Int ) vars.elementAt(z);
-					System.out.println( vars.elementAt(z).getName() + " : " + k1.getValue() );
-				}
-				
-				if( vars.elementAt(z) instanceof Real ){
-					k2 = ( Real ) vars.elementAt(z);
-					System.out.println( vars.elementAt(z).getName() + " : " + k2.getValue() );
-				}	
-		
-				if( vars.elementAt(z) instanceof Str ){
-					k3 = ( Str ) vars.elementAt(z);
-					System.out.println( vars.elementAt(z).getName() + " : " + k3.getValue() );
-				}	
-			}
+			System.exit(0);
 		}
 
 		return true;
