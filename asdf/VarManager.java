@@ -137,7 +137,7 @@ class VarManager{
 		Double k = Exp.realArith( vars, v );		
 
 		if( k != null ){
-			var.setValue( k.intValue() );
+			var.setValue( k.doubleValue() );
 		
 			return true;
 		}
@@ -148,6 +148,7 @@ class VarManager{
 	}
 
 	private static boolean assigStr( Str var, String v ){
+		if( v.length() == 0 ) return true;
 		
 		if( v.charAt(0) != '"' || v.charAt(v.length()-1) != '"' ){
 			System.out.println("ERRO: Uma String deve estar dentro de aspas duplas " + '"' + " ");

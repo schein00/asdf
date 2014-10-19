@@ -1,9 +1,8 @@
-Principal{
-	
-	inteiro n = 1000, i = 0;
+real a, b, m;
 
-	enquanto( i < n ){
-		saida( i );
-		i = i + 1;
-	}
-}
+entrada( a, b );
+
+m = a + b;
+m = m / 2;
+
+saida( m );

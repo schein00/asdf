@@ -26,8 +26,9 @@ class Exp{
 
 	public static boolean nonNumeric( String k ){
 		for( int i = 0; i < k.length(); i++ ){
-			if( ( k.charAt(i) > '9' || k.charAt(i) < '0' ) && k.charAt(i) != '.' && k.charAt(i) != '+'
+			if( ( k.charAt(i) > '9' || k.charAt(i) < '0' ) && k.charAt(i) != ',' && k.charAt(i) != '+'
 				&& k.charAt(i) != '*' && k.charAt(i) != '/' && k.charAt(i) != '-' && k.charAt(i) != '%'){
+			
 				return true;
 			}
 		}
@@ -48,7 +49,7 @@ class Exp{
 			return new Integer( ((Int)k).getValue() );
 		}
 		else {
-			if( e.contains(".") ){
+			if( e.contains(",") ){
 				System.out.println("ERRO: Nao e permitido atribuir valor real a uma variavel inteira.");
 				return null;
 			}
@@ -113,15 +114,15 @@ class Exp{
 				
 			Var k = VarManager.exists( vars, e );
 				
-			if( k == null || !( k instanceof Int ) ){
+			if( k == null || !( k instanceof Real ) ){
 				System.out.println("ERRO: " + e + " nao e reconhecivel.");
 				return null;
 			}
-				
+
 			return new Double( ((Real)k).getValue() );
 		}
 		else {
-
+			//System.out.println( "v: " + e );
 			return new Double( e );
 		}
 	}
@@ -136,13 +137,13 @@ class Exp{
 
 		String pair[] = oSplit( o, e );
 
-		pair[0] = pair[0].trim();
-		pair[1] = pair[1].trim();
-
 		if( pair.length != 2 ) {
-			System.out.println("ERRO: So e permitido dois operandos.");
+			System.out.println("ERRO: So sao permitido dois operandos.");
 			return null;
 		}		
+
+		pair[0] = pair[0].trim();
+		pair[1] = pair[1].trim();
 
 		Double a = realFilter( vars, pair[0] );
 		Double b = realFilter( vars, pair[1] );

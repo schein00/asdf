@@ -74,7 +74,7 @@ class AsdfInter {
 					i++;
 				}
 	
-				if( !check.empty() || i >= hmLines ){
+				if( !check.empty() ){
 					System.out.println("ERRRO: Esta faltando um '}' para o '{' na linha " + ( last + 1 ) );
 					System.exit(0);
  				}
@@ -118,18 +118,8 @@ class AsdfInter {
 		for( int j = 0 ; j < line.length(); j++ ){
 			c = line.charAt(j);
 
-			if( c == '{' ){
-										
-				String command = line.substring( subInit, j ).trim();						
-
-				if( command.compareTo( "Principal" ) != 0 || c == '(' ){
-
-						System.out.println("ERRO: Comando " + "'" + c + "'" + " não reconhecido na linha " + ( i + 1 ) + "." );
-						
-						System.exit(0);
-				}
-
-				subInit = j+1;
+			if( c == '{' ){			
+				return false;
 			}
 
 			else if( j+1 == line.length() && c != ';' && c != '}' ) {
