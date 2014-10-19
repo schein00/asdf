@@ -1,5 +1,1 @@
--- Entrada e saída.
--- Loops e ifs aninhados.
--- Criação de variáveis na mesma linha.
--- Atribuição de valores para variáveis na mesma linha.
--- Sintaxe flexível.
+Estrutura correta, organização em pacotes e criação do arquivo Asdf.jar
