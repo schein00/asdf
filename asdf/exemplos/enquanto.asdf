@@ -1,0 +1,11 @@
+inteiro i = 0, cmp = 20, z, r;
+
+enquanto( i < cmp ){
+	i = i + 1;
+
+	r = i % 2;
+
+	se( r == z ){
+		saida( i, e par );
+	}
+}
