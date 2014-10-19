@@ -19,7 +19,7 @@ import interpret.AsdfInter;
 class AsdfReader {
 
     public static void main(String args[]) throws Exception {
-
+		
         File f;
 
         Scanner s;
