@@ -1,3 +1,20 @@
+/*
+ 	Autor: Matheus DallRosa
+	Email: matheusdallrosa94@gmail.com
+
+	Está classe possui todos os metodos necessários para manipular
+	variáveis( não seu conteúdo ).
+
+	Um fato importante para entender o funcionamento da classe
+	é que todos os métodos com new no inicio são responsaveis por verificar
+	a existencia de uma variável de um certo tipo e verificar a validade do seu
+	nome, esses métodos se utilizam dos métodos que possuem assig no inicio de seu nome,
+	os quais atribuem valores as variáveis.
+
+	Eu fiz essa separação pois quando for necessário fazer validações nos conteúdos a serem
+	inseridos eles seram feitos diretamente nos metódos que possuem assig no início.
+ */
+
 package var;
 
 import exp.Exp;
