@@ -1,3 +1,12 @@
+/*
+ 	Autor: Matheus DallRosa
+	Email: matheusdallrosa94@gmail.com
+
+	Está classe é responsável por checar a sintaxe das linhas de código
+	uma vez que a sintaxe está correta ela passa a responsabilidade de executar
+	as ações para as outras classes, nenhuma outra classe no projeto se utiliza desta
+	classe além da classe AsdfReader.
+ */
 package interpret;
 
 import java.util.*;
@@ -8,7 +17,7 @@ import io.IO;
 public class AsdfInter {
 
 	private int hmLines;
-    private String lines[], line;
+	private String lines[], line;
 	private Vector< Var > vars;
 
 	public AsdfInter( String l[], int hml ){
@@ -20,40 +29,40 @@ public class AsdfInter {
 
 	private String getCond( String s, int i ){
 		String pair[] = s.split("\\(");
-					
+				
 		if( pair.length != 2 ){
 			System.out.println("ERRO: Comando nao reconhecido");
 			System.out.println("Linha: " + ( i + 1 ) );
 			return null;
 		}
-					
+				
 		String pair2[] = pair[1].split("\\)");
 		return pair2[0].trim();
 	}
 
-    public boolean interpret( int i ) {
+	public boolean interpret( int i ) {
 
 		String s;
 		Stack< String > check = new < String >Stack();
 
-        for( ; i < hmLines; i++ ) {
-            
+		for( ; i < hmLines; i++ ) {
+		    
 			line = lines[i].trim();
 
 			boolean isIF = line.contains("se");
 			boolean isWhile = line.contains("enquanto");
-	
+
 			if( isIF || isWhile ){
 				if(( s = readStep(i,0,'{')) == null ) return false;
 
 				String cond = getCond( s, i );
-		
+	
 				if( cond == null ) return false;
 
 				cond = cond.trim();
-					
-				check.push( line );
 				
+				check.push( line );
+			
 				i++;
 				if( isIF && Exp.ineq( vars, cond ) ){
 					if( !interpret( i ) ) return false;
@@ -78,11 +87,11 @@ public class AsdfInter {
 
 					i++;
 				}
-	
+
 				if( !check.empty() ){
 					System.out.println("ERRRO: Esta faltando um '}' para o '{' na linha " + ( last + 1 ) );
 					System.exit(0);
- 				}
+				}
 			}
 
 			else if( line.contains("entrada") ) {
@@ -104,7 +113,7 @@ public class AsdfInter {
 			}
 
 			else if( line.contains("}") ) return true;
-				
+			
 			else execute( i );
 		}	
 
@@ -114,9 +123,9 @@ public class AsdfInter {
 		}
 
 		return true;
-    }
+	}
 
-	public boolean execute( int i ){
+	private boolean execute( int i ){
 		char c;
 		int subInit = 0;
 
@@ -129,21 +138,21 @@ public class AsdfInter {
 
 			else if( j+1 == line.length() && c != ';' && c != '}' ) {
 				System.out.println("ERRO: Comando não reconhecido na linha " + ( i + 1 ) + "." );
-						
+					
 				System.exit(0);
 			}
 			else if( c == ' ' ){
 
 				String vars;
 				String command = line.substring( subInit, j ).trim();
-				
+			
 				if( command.compareTo("inteiro") == 0 ){
-							
+						
 					if( ( vars = readStep( i,j+1, ';' ) ) == null ) {
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
 					}
-			
+		
 					if( !multDeclaration( vars, 0 ) )  {
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
@@ -155,7 +164,7 @@ public class AsdfInter {
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
 					}
-			
+		
 					if( !multDeclaration( vars, 1 ) )   {
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
@@ -166,7 +175,7 @@ public class AsdfInter {
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
 					}
-		
+	
 					if( !multDeclaration( vars, 2 ) )   {
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
@@ -176,7 +185,7 @@ public class AsdfInter {
 				else if( line.contains("=") ) {
 
 					if( ( vars = readStep( i, 0, ';' ) ) == null ) {
-						
+					
 						System.out.println("	Linha: " + (i+1) );
 						System.exit(0);
 					}
@@ -190,7 +199,7 @@ public class AsdfInter {
 					System.out.println("ERRO: Comando não reconhecido na linha " + ( i + 1 ) );
 					System.exit(0);
 				}
-				
+			
 				break;
 			}
 		}
@@ -203,7 +212,7 @@ public class AsdfInter {
 		String mult[] = line.split(",");
 		String pair[];		
 		for( int i = 0; i < mult.length; i++ ){
-			
+		
 			pair = mult[i].split("=");
 
 			if( pair.length < 2 ){
@@ -228,7 +237,7 @@ public class AsdfInter {
 	}
 
 	private boolean multDeclaration( String dec, int t ){
-		
+	
 		String k;
 		String pair[];
 		String mult[] = dec.split(",");
