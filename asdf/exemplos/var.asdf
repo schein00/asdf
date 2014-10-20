@@ -1,9 +1,0 @@
-inteiro a = 10;
-
-inteiro b = 5, c, d;
-
-saida( a, , b, , c, , d );
-
-a = b = c = d = 0;
-
-saida( a, , b, , c, , d );

@@ -1,9 +1,0 @@
-real a, b;
-
-entrada(a,b);
-
-real c = a + b;
-
-c = c / 2;
-
-saida( c );
