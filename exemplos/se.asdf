@@ -1,0 +1,19 @@
+inteiro a = 10, b;
+
+se( a == b ){
+	saida( sao iguais );
+}
+
+se( a != b ){
+	saida( sao diferentes );
+}
+
+se( b < a ){
+	saida( b e menor do que a );
+}
+
+b = a;
+
+se( a == b ){
+	saida( sao iguais );
+}
