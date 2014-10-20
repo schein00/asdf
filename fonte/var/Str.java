@@ -1,3 +1,10 @@
+/*
+ 	Autor: Matheus DallRosa
+	Email: matheusdallrosa94@gmail.com
+
+	Está classe representará variáveis do tipo str.
+ */
+
 package var;
 
 public class Str extends Var{

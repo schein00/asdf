@@ -1,3 +1,11 @@
+/*
+ 	Autor: Matheus DallRosa
+	Email: matheusdallrosa94@gmail.com
+
+	Está classe representará variáveis do tipo real no programa, 
+	ela foi criada para mudanças futuras dos metodos da classe Exp
+	para está classe.
+ */
 package var;
 
 public class Real extends Var{
