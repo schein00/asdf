@@ -1,3 +1,11 @@
+/*
+ 	Autor: Matheus DallRosa
+	Email: matheusdallrosa94@gmail.com
+
+	Classe responsável por realizar a entrada e saída de dados
+	tanto o método entrada quanto o método saída se utilizam 
+	da classe Scanner.
+ */
 package io;
 
 import java.util.*;
