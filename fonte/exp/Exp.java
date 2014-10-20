@@ -1,9 +1,7 @@
-package exp;
-
-import java.util.*;
-import var.*;
-
 /*
+ *	Autor: Matheus DallRosa
+ *  Email: matheusdallrosa94@gmail.com
+ *
  * 	Essa classe vai resolver igualdades, quando houver uma atribuição
  *
  *	a = c + b; por exemplo ela receberá a string c + b e resolverá a expressão.
@@ -11,6 +9,12 @@ import var.*;
  *	O método ineq devolve o valor boleano de uma inequação
  *	i < j 			
  */
+
+package exp;
+
+import java.util.*;
+import var.*;
+
 public class Exp{
 
 	private static char operand( String e ){
