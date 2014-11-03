@@ -43,6 +43,19 @@ public class Exp{
 		return false;
 	}
 
+	private static String[] oSplit( char o, String e ){
+		
+		if( o == '+' ) return e.split("\\+");
+		
+		if( o == '-' ) return e.split("-");
+
+		if( o == '/' ) return e.split("/");
+
+		if( o == '%' ) return e.split("%");
+		
+		return e.split("\\*");
+	}
+
 	private static Integer intFilter( Vector< Var > vars, String e ){
 		if( nonNumeric( e ) ){
 				
@@ -63,19 +76,6 @@ public class Exp{
 
 			return new Integer( e );
 		}
-	}
-
-	private static String[] oSplit( char o, String e ){
-		
-		if( o == '+' ) return e.split("\\+");
-		
-		if( o == '-' ) return e.split("-");
-
-		if( o == '/' ) return e.split("/");
-
-		if( o == '%' ) return e.split("%");
-		
-		return e.split("\\*");
 	}
 
 	public static Integer intArith( Vector< Var > vars, String e ){		
