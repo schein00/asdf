@@ -48,7 +48,7 @@ class AsdfReader {
                 i++;
 
             }
-            
+            linhas[i] = new String(" ");
 			// Instanciamos o interpretador.
             b = new AsdfInter( linhas, i );
 
