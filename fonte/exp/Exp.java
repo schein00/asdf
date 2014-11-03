@@ -1,6 +1,6 @@
 /*
  *	Autor: Matheus DallRosa
- *  Email: matheusdallrosa94@gmail.com
+ *      Email: matheusdallrosa94@gmail.com
  *
  * 	Essa classe vai resolver igualdades, quando houver uma atribuição
  *
