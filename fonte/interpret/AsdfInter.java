@@ -74,7 +74,7 @@ public class AsdfInter {
 				}
 
 				int last = i-1;
-				while( !check.empty() && i < lines.length ){
+				while( !check.empty() && i < hmLines ){
 
 					if( lines[i].contains("se") || lines[i].contains("enquanto") ){
 						last = i;
@@ -86,11 +86,6 @@ public class AsdfInter {
 					}
 
 					i++;
-				}
-
-				if( lines[i].contains("}") ){
-					System.out.println("ERRO: '}' na linha " + (i+1) );
-					System.exit(0);	
 				}
 
 				if( !check.empty() ){
