@@ -19,12 +19,14 @@ public class AsdfInter {
 	private int hmLines;
 	private String lines[], line;
 	private Vector< Var > vars;
+	private Stack< String > check;
 
 	public AsdfInter( String l[], int hml ){
 
 		hmLines = hml;
 		this.lines = l;
 		vars = new < Var >Vector();
+		check = new < String >Stack();
 	}	
 
 	private String getCond( String s, int i ){
@@ -43,8 +45,6 @@ public class AsdfInter {
 	public boolean interpret( int i ) {
 
 		String s;
-		Stack< String > check = new < String >Stack();
-
 		for( ; i < hmLines; i++ ) {
 		    
 			line = lines[i].trim();
@@ -88,6 +88,11 @@ public class AsdfInter {
 					i++;
 				}
 
+				if( lines[i].contains("}") ){
+					System.out.println("ERRO: '}' na linha " + (i+1) );
+					System.exit(0);	
+				}
+
 				if( !check.empty() ){
 					System.out.println("ERRRO: Esta faltando um '}' para o '{' na linha " + ( last + 1 ) );
 					System.exit(0);
@@ -112,7 +117,9 @@ public class AsdfInter {
 				IO.output( line, vars );
 			}
 
-			else if( line.contains("}") ) return true;
+			else if( line.contains("}") ) {
+				return true;
+			}
 			
 			else execute( i );
 		}	
@@ -258,26 +265,26 @@ public class AsdfInter {
 				pair[1] = pair[1].trim();
 
 				if( t == 0 ) {
-					if( !VarManager.newInt( vars, pair[0], pair[1] ) ) System.exit(0);;
+					if( !VarManager.newInt( vars, pair[0], pair[1] ) ) System.exit(0);
 				}
 
 				else if( t == 1 ) {
-					if( !VarManager.newReal( vars, pair[0], pair[1] ) ) System.exit(0);;
+					if( !VarManager.newReal( vars, pair[0], pair[1] ) ) System.exit(0);
 				}
 				else{
-					if( !VarManager.newStr( vars, pair[0], pair[1] ) ) System.exit(0);;
+					if( !VarManager.newStr( vars, pair[0], pair[1] ) ) System.exit(0);
 				}
 			}
 			else{
 				if( t == 0 ) {	
-					if( !VarManager.newInt( vars, k, "0" ) ) System.exit(0);;
+					if( !VarManager.newInt( vars, k, "0" ) ) System.exit(0);
 				}
 
 				else if( t == 1 ) {
-					if( !VarManager.newReal( vars, k, "0" ) ) System.exit(0);;
+					if( !VarManager.newReal( vars, k, "0" ) ) System.exit(0);
 				}
 				else{
-					if( !VarManager.newStr( vars, k, " " ) ) System.exit(0);;
+					if( !VarManager.newStr( vars, k, " " ) ) System.exit(0);
 				}
 			}
 		}
