@@ -1,0 +1,21 @@
+inteiro i, j, k, cmp = 5;
+
+enquanto( i < cmp ){
+	i = i + 1;
+
+	j = 0;
+	enquanto( j < cmp ){
+		j = j + 1;
+	
+		k = 0;
+		enquanto( k < cmp ){
+			k = k + 1;
+
+			se( i == j ){
+				se( j == k ){
+					saida( i, = , j , = , k );
+				}
+			}
+		}
+	}
+}

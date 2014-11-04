@@ -19,14 +19,12 @@ public class AsdfInter {
 	private int hmLines;
 	private String lines[], line;
 	private Vector< Var > vars;
-	private Stack< String > check;
 
 	public AsdfInter( String l[], int hml ){
 
 		hmLines = hml;
 		this.lines = l;
 		vars = new < Var >Vector();
-		check = new < String >Stack();
 	}	
 
 	private String getCond( String s, int i ){
@@ -45,6 +43,7 @@ public class AsdfInter {
 	public boolean interpret( int i ) {
 
 		String s;
+		Stack< String >	check = new < String >Stack();
 		for( ; i < hmLines; i++ ) {
 		    
 			line = lines[i].trim();
@@ -87,6 +86,8 @@ public class AsdfInter {
 
 					i++;
 				}
+
+				if( lines[i].trim().length() != 0 ) i--;
 
 				if( !check.empty() ){
 					System.out.println("ERRRO: Esta faltando um '}' para o '{' na linha " + ( last + 1 ) );

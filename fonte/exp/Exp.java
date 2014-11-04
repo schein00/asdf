@@ -174,7 +174,54 @@ public class Exp{
 		String pair[];
 		Var a, b;
 
-		if( e.contains(">") ){
+		if( e.contains(">=") ){
+			
+			pair = e.split(">=");
+			pair[0] = pair[0].trim();
+			pair[1] = pair[1].trim();
+			
+			a = VarManager.exists( vars, pair[0] );
+			b = VarManager.exists( vars, pair[1] );
+
+			if( a != null && b != null ) {
+				
+				if( a instanceof Int && b instanceof Int ){
+					return ((Int)a).getValue() >= ((Int)b).getValue();
+				}
+
+				if( a instanceof Real && b instanceof Real ){
+					return ((Real)a).getValue() >= ((Real)b).getValue();
+				}
+
+				if( a instanceof Str && b instanceof Str ){
+					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) >= 0;
+				}
+			}
+			else{
+				
+				try{
+					double kb = Double.parseDouble(pair[1]);
+					
+					if( a instanceof Int ){
+						return ((Int)a).getValue() >= (int)kb;
+					}
+
+					if( a instanceof Real ){
+						return ((Real)a).getValue() >= kb;
+					}
+
+					if( a instanceof Str ){
+						return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) >= 0;
+					}
+				}
+				catch(Exception e1){
+					System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+					System.exit(0);
+				}
+			}
+		}
+
+		else if( e.contains(">") ){
 			pair = e.split(">");
 			pair[0] = pair[0].trim();
 			pair[1] = pair[1].trim();
@@ -195,35 +242,28 @@ public class Exp{
 					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) > 0;
 				}
 			}
+			else{
 
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
-		}
+				try{
+					double kb = Double.parseDouble(pair[1]);
+					
+					if( a instanceof Int ){
+						return ((Int)a).getValue() > (int)kb;
+					}
 
-		else if( e.contains(">=") ){
-			pair = e.split(">=");
-			pair[0] = pair[0].trim();
-			pair[1] = pair[1].trim();
-			
-			a = VarManager.exists( vars, pair[0] );
-			b = VarManager.exists( vars, pair[1] );
+					if( a instanceof Real ){
+						return ((Real)a).getValue() > kb;
+					}
 
-			if( a != null && b != null ) {
-				if( a instanceof Int && b instanceof Int ){
-					return ((Int)a).getValue() >= ((Int)b).getValue();
+					if( a instanceof Str ){
+						return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) > 0;
+					}
 				}
-
-				if( a instanceof Real && b instanceof Real ){
-					return ((Real)a).getValue() >= ((Real)b).getValue();
-				}
-
-				if( a instanceof Str && b instanceof Str ){
-					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) >= 0;
+				catch(Exception e1){
+					System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+					System.exit(0);
 				}
 			}
-
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
 		}
 
 		else if( e.contains("<=") ){
@@ -247,9 +287,28 @@ public class Exp{
 					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) <= 0;
 				}
 			}
+			else{
 
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
+				try{
+					double kb = Double.parseDouble(pair[1]);
+					
+					if( a instanceof Int ){
+						return ((Int)a).getValue() <= (int)kb;
+					}
+
+					if( a instanceof Real ){
+						return ((Real)a).getValue() <= kb;
+					}
+
+					if( a instanceof Str ){
+						return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) <= 0;
+					}
+				}
+				catch(Exception e1){
+					System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+					System.exit(0);
+				}
+			}
 		}
 
 		else if( e.contains("<") ){
@@ -273,9 +332,28 @@ public class Exp{
 					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) < 0;
 				}
 			}
+			else{
 
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
+				try{
+					double kb = Double.parseDouble(pair[1]);
+					
+					if( a instanceof Int){
+						return ((Int)a).getValue() < (int)kb;
+					}
+
+					if( a instanceof Real ){
+						return ((Real)a).getValue() < kb;
+					}
+
+					if( a instanceof Str ){
+						return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) < 0;
+					}
+				}
+				catch(Exception e1){
+					System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+					System.exit(0);
+				}
+			}
 		}
 
 		else if( e.contains("==") ){
@@ -299,9 +377,28 @@ public class Exp{
 					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) == 0;
 				}
 			}
+			else{
 
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
+				try{
+					double kb = Double.parseDouble(pair[1]);
+					
+					if( a instanceof Int ){
+						return ((Int)a).getValue() == (int)kb;
+					}
+
+					if( a instanceof Real ){
+						return ((Real)a).getValue() == kb;
+					}
+
+					if( a instanceof Str ){
+						return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) == 0;
+					}
+				}
+				catch(Exception e1){
+					System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+					System.exit(0);
+				}
+			}
 		}
 
 		else if( e.contains("!=") ){
@@ -325,9 +422,28 @@ public class Exp{
 					return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) != 0;
 				}
 			}
+			else{
 
-			System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
-			System.exit(0);
+				try{
+					double kb = Double.parseDouble(pair[1]);
+					
+					if( a instanceof Int ){
+						return ((Int)a).getValue() != (int)kb;
+					}
+
+					if( a instanceof Real ){
+						return ((Real)a).getValue() != kb;
+					}
+
+					if( a instanceof Str ){
+						return ((Str)a).getValue().compareTo( ((Str)b).getValue() ) != 0;
+					}
+				}
+				catch(Exception e1){
+					System.out.println("ERRO: Voce esta comparando variaveis de tipos diferentes!");
+					System.exit(0);
+				}
+			}
 		}
 		
 		return true;
