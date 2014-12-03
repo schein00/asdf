@@ -30,20 +30,20 @@ public class AsdfInter {
 	private String getCond( String s, int i ){
 		String pair[] = s.split("\\(");
 				
-		if( pair.length != 2 ){
+		if( pair.length != 2 ){ 		//testa se so existe um ( para fazer testes logicos
 			System.out.println("ERRO: Comando nao reconhecido");
 			System.out.println("Linha: " + ( i + 1 ) );
 			return null;
 		}
 				
 		String pair2[] = pair[1].split("\\)");
-		return pair2[0].trim();
+		return pair2[0].trim();		//retorna apenas o teste logico dentro dos ()
 	}
 
 	public boolean interpret( int i ) {
 
 		String s;
-		Stack< String >	check = new < String >Stack();
+		Stack< String >	check = new < String >Stack();  //cria uma pilha de String
 		for( ; i < hmLines; i++ ) {
 		    
 			line = lines[i].trim();
@@ -52,31 +52,32 @@ public class AsdfInter {
 			boolean isWhile = line.contains("enquanto");
 
 			if( isIF || isWhile ){
-				if(( s = readStep(i,0,'{')) == null ) return false;
+				if(( s = readStep(i,0,'{')) == null ) return false; // testa se abre o bloco de comandos do if/else
 
 				String cond = getCond( s, i );
 	
-				if( cond == null ) return false;
+				if( cond == null ) return false;		//testa se existe algo para fazer testes
 
 				cond = cond.trim();
 				
-				check.push( line );
+				check.push( line );  	//empilha a linha que esta sendo interpretada
 			
 				i++;
+				//Exp.ineq é o metodo usado para fazer os testes logicos
 				if( isIF && Exp.ineq( vars, cond ) ){
-					if( !interpret( i ) ) return false;
+					if( !interpret( i ) ) return false; //usando recurcao interpreta os comandos dentro do if
 				}
 				else if( isWhile ) {
-					while( Exp.ineq( vars, cond ) ){												
-						if( !interpret( i ) ) return false;
+					while( Exp.ineq( vars, cond ) ){		//faz teste logico do while, da mesma forma que no if										
+						if( !interpret( i ) ) return false; 	//por recurcao faz a interpretacao dos comandos dentro do while
 					}
 				}
 
 				int last = i-1;
-				while( !check.empty() && i < hmLines ){
+				while( !check.empty() && i < hmLines ){	 	//testa se a pilha esta vazia, e se i é menor que numero de linhas passadas para o interoretador
 
-					if( lines[i].contains("se") || lines[i].contains("enquanto") ){
-						last = i;
+					if( lines[i].contains("se") || lines[i].contains("enquanto") ){		//se encontrar if/while, como ja foi interpretado,
+						last = i;																//os comandos sao empilhados ate o fim do bloco
 						check.push( lines[i] );
 					}
 
@@ -89,13 +90,13 @@ public class AsdfInter {
 
 				if( lines[i].trim().length() != 0 ) i--;
 
-				if( !check.empty() ){
+				if( !check.empty() ){		//testa se o escopo do if/while foi fechado
 					System.out.println("ERRRO: Esta faltando um '}' para o '{' na linha " + ( last + 1 ) );
 					System.exit(0);
 				}
 			}
 
-			else if( line.contains("entrada") ) {
+			else if( line.contains("entrada") ) {		//teste se tiver a palavra chave entrada, e entao é chamado o metodo para fazer a entrada de informacoes
 				if( ( s = readStep( i, 0, ';' ) ) == null ) {
 					System.out.println("	Linha: " + (i+1) );
 					System.exit(0);
@@ -104,7 +105,7 @@ public class AsdfInter {
 				IO.input( line, vars );
 			}
 
-			else if( line.contains("saida") ) {
+			else if( line.contains("saida") ) {			//comando de saida, chama metodo uasdo para fazer a saida de informacoes
 				if( ( s = readStep( i, 0, ';' ) ) == null ) {
 					System.out.println("	Linha: " + (i+1) );
 					System.exit(0);
@@ -113,11 +114,11 @@ public class AsdfInter {
 				IO.output( line, vars );
 			}
 
-			else if( line.contains("}") ) {
+			else if( line.contains("}") ) {		//comando para fechar bloco de comando
 				return true;
 			}
 			
-			else execute( i );
+			else execute( i );				// se nao encontrar nenhum dos comandos acimaele chama o metodo execute, que fara a parte de criacao de variavel, e operacoes. 
 		}	
 
 		if( !check.empty() ){
@@ -128,7 +129,7 @@ public class AsdfInter {
 		return true;
 	}
 
-	private boolean execute( int i ){
+	private boolean execute( int i ){				
 		char c;
 		int subInit = 0;
 
@@ -288,6 +289,8 @@ public class AsdfInter {
 		return true;
 	}
 
+	
+	//funcao que testa se o comando e valido
 	private String readStep( int i, int j, char c ){
 		int k = j;
 

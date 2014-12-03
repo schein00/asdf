@@ -17,7 +17,7 @@ import var.*;
 
 public class Exp{
 
-	private static char operand( String e ){
+	private static char operand( String e ){		//testa operadores
 		if( e.contains("*") ) return '*';
 
 		else if( e.contains("/") ) return '/';
@@ -170,6 +170,7 @@ public class Exp{
 		return new Double( k );
 	}
 
+	//funcao para fazer teste logico
 	public static boolean ineq( Vector< Var > vars, String e ){
 		String pair[];
 		Var a, b;
